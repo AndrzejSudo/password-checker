@@ -17,4 +17,3 @@ def call_API(pswrd):
     pswrd-hash-dig-prefix = pswrd-hash-dig[:5]                              #slicing diges prefix as an input for API
     API-call = API-url + pswrd-hash-dig-prefix
     req-url = requests.get(API-call)
-    
