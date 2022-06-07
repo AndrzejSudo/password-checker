@@ -40,5 +40,4 @@ def call_API(pswrd):
         print("No idea, try debugging")
         sys.exit()
     
-
 call_API("password")
