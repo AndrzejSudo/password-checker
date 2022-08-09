@@ -24,7 +24,7 @@ Usage: pswrd-check.py [-h] [-w] [-p] <INPUT>
 
     positional arguments:
         INPUT               -   either password or wordlist, mode dependend
-    
+
     options:
         -h, --help          -   displays help info
         -w, --wordlist      -   wordlists mode, requires password list file to check typed password f.e -w <wordlist.txt> -p <password>
