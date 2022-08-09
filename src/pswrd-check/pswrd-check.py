@@ -114,7 +114,7 @@ def mode_picker():
 
 def wordlist_load(wordlist, val):
     try:
-        with open(wordlist, "r") as file:
+        with open(wordlist, "r") as file:                                      #wordlist should be in txt format
             wordlist_split = (file.read().split(" "))
     except FileNotFoundError:
         print("Incorrect path to wordlist")
