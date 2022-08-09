@@ -1,13 +1,14 @@
 import sys
 import getopt
+imports = ['hashlib', 'requests']
 
-try:
-    import hashlib, requests
-except ModuleNotFoundError as e:
-    print(e + "\n"+"Install missing module to run this script")
-    sys.exit()
-finally:
-    print("")
+for i in imports:
+    try:
+        exec("import {module}".format(module=i))
+    except ModuleNotFoundError as e:
+        print(e)
+        print("Install missing module to run this script")
+        sys.exit()
 
 API_url = "https://api.pwnedpasswords.com/range/"                          #more info on how it works https://haveibeenpwned.com/API/v3#PwnedPasswords
 arguments = sys.argv[1:]
@@ -64,7 +65,7 @@ def mode_web(pswrd):
         API_call = API_url + pswrd_hash_dig_prefix                         #haveibeenpwned verifies only 5 first letter of hashed password
         resp_url = requests.get(API_call)                                  #API response
         
-        if ('200' in str(resp_url)):                                       #http response: 200 - ok, 400 - not ok
+        if ('200' in str(resp_url)):                                       #http response
             pswrd_cnt = 0
             resp_url_split = resp_url.text.splitlines()
             for hashes in resp_url_split:
@@ -99,7 +100,7 @@ def mode_picker():
         if mode.isdecimal():
             if int(mode) == 1:
                 password = input("Enter password: ")
-                mode_API(password)
+                mode_web(password)
             elif int(mode) == 2:
                 wordlist = input("Enter wordlist filename: ")
                 password = input("Enter password: ")
@@ -112,8 +113,12 @@ def mode_picker():
             continue
 
 def wordlist_load(wordlist, val):
-    with open(wordlist, "r") as file:
-        wordlist_split = (file.read().split(" "))
+    try:
+        with open(wordlist, "r") as file:
+            wordlist_split = (file.read().split(" "))
+    except FileNotFoundError:
+        print("Incorrect path to wordlist")
+        sys.exit()
     for password in wordlist_split:
             if val == password:
                 print("Password compromised")
